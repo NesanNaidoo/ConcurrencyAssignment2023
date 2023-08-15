@@ -1,6 +1,5 @@
-// Nesan Naidoo
-// 15/08/2023
-
+#Nesan Naidoo
+#15/08/2023
 JAVAC=javac
 
 
