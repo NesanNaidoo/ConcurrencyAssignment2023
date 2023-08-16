@@ -83,6 +83,9 @@ public class ClubSimulation {
 		pauseB.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				// THIS DOES NOTHING - MUST BE FIXED
+				synchronized (this) {
+					simRun.set(false);
+				}
 
 			}
 		});
@@ -154,19 +157,23 @@ public class ClubSimulation {
 		Thread t = new Thread(clubView);
 		t.start();
 		// Start counter thread - for updating counters
+		Thread s = new Thread(counterDisplay);
+		s.start();
 
 		for (int i = 0; i < noClubgoers; i++) {
 			patrons[i].start();
 		}
 
-		while (tallys.getLeft() < tallys.getMax()) {
-			if (simRun.get()) {
-				Thread s = new Thread(counterDisplay);
-				s.start();
+		// while (tallys.getLeft() < tallys.getMax()) {
+		// if (simRun.get()) {
 
-			}
+		// }
 
-		}
+		// }
+	}
+
+	public static void stopSim() {
+		simRun.set(false);
 	}
 
 }
