@@ -33,6 +33,8 @@ public class ClubSimulation {
 	private static int maxWait = 1200; // for the slowest customer
 	private static int minWait = 500; // for the fastest cutomer
 
+	public static AtomicBoolean simRun = new AtomicBoolean(false);
+
 	public static void setupGUI(int frameX, int frameY, int[] exits) {
 		// Frame initialize and dimensions
 		JFrame frame = new JFrame("club animation");
@@ -70,15 +72,7 @@ public class ClubSimulation {
 		startB.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				// THIS DOES NOTHING - MUST BE FIXED
-				Thread t = new Thread(clubView);
-				t.start();
-				// Start counter thread - for updating counters
-				Thread s = new Thread(counterDisplay);
-				s.start();
-
-				for (int i = 0; i < noClubgoers; i++) {
-					patrons[i].start();
-				}
+				startSim();
 			}
 		});
 
@@ -89,6 +83,7 @@ public class ClubSimulation {
 		pauseB.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				// THIS DOES NOTHING - MUST BE FIXED
+
 			}
 		});
 
@@ -152,6 +147,26 @@ public class ClubSimulation {
 		// for (int i = 0; i < noClubgoers; i++) {
 		// patrons[i].start();
 		// }
+	}
+
+	public static void startSim() {
+		simRun.set(true);
+		Thread t = new Thread(clubView);
+		t.start();
+		// Start counter thread - for updating counters
+
+		for (int i = 0; i < noClubgoers; i++) {
+			patrons[i].start();
+		}
+
+		while (tallys.getLeft() < tallys.getMax()) {
+			if (simRun.get()) {
+				Thread s = new Thread(counterDisplay);
+				s.start();
+
+			}
+
+		}
 	}
 
 }
