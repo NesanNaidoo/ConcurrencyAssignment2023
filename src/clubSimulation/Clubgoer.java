@@ -57,13 +57,14 @@ public class Clubgoer extends Thread {
 	// setter
 
 	// check to see if user pressed pause button
-	private void checkPause() {
-		// THIS DOES NOTHING - MUST BE FIXED
-
+	private void checkPause() throws InterruptedException {
+		while (ClubSimulation.isPaused()) {
+			sleep(100); // Small sleep to avoid busy waiting
+		}
 	}
 
 	private void startSim() {
-
+		// THIS DOES NOTHING - MUST BE FIXED
 	}
 
 	// get drink at bar

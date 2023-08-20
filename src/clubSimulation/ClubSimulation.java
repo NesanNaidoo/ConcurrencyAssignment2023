@@ -34,6 +34,7 @@ public class ClubSimulation {
 	private static int minWait = 500; // for the fastest cutomer
 
 	public static AtomicBoolean simRun = new AtomicBoolean(false);
+	private static AtomicBoolean paused = new AtomicBoolean(false);
 
 	public static void setupGUI(int frameX, int frameY, int[] exits) {
 		// Frame initialize and dimensions
@@ -66,25 +67,28 @@ public class ClubSimulation {
 		// Add start, pause and exit buttons
 		JPanel b = new JPanel();
 		b.setLayout(new BoxLayout(b, BoxLayout.LINE_AXIS));
-		JButton startB = new JButton("Start");
-
-		// add the listener to the jbutton to handle the "pressed" event
-		startB.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				// THIS DOES NOTHING - MUST BE FIXED
-				startSim();
-			}
-		});
+		final JButton startB = new JButton("Start");
 
 		final JButton pauseB = new JButton("Pause ");
 		;
 
 		// add the listener to the jbutton to handle the "pressed" event
+		startB.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+
+				startSim();
+				startB.setEnabled(false); // Disable the Start button after it's pressed
+				pauseB.setEnabled(true); // Enable the Pause button
+			}
+		});
+
+		pauseB.setEnabled(false);
+		// add the listener to the jbutton to handle the "pressed" event
 		pauseB.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				// THIS DOES NOTHING - MUST BE FIXED
+
 				synchronized (this) {
-					simRun.set(false);
+					togglePause();
 				}
 
 			}
@@ -140,16 +144,7 @@ public class ClubSimulation {
 		}
 
 		setupGUI(frameX, frameY, exit); // Start Panel thread - for drawing animation
-		// start all the threads
-		// Thread t = new Thread(clubView);
-		// t.start();
-		// // Start counter thread - for updating counters
-		// Thread s = new Thread(counterDisplay);
-		// s.start();
 
-		// for (int i = 0; i < noClubgoers; i++) {
-		// patrons[i].start();
-		// }
 	}
 
 	public static void startSim() {
@@ -164,16 +159,18 @@ public class ClubSimulation {
 			patrons[i].start();
 		}
 
-		// while (tallys.getLeft() < tallys.getMax()) {
-		// if (simRun.get()) {
-
-		// }
-
-		// }
 	}
 
 	public static void stopSim() {
 		simRun.set(false);
 	}
 
+	public static boolean isPaused() {
+		return paused.get();
+	}
+
+	private static void togglePause() {
+		paused.set(!paused.get());
+		// Implement any necessary actions to handle pausing/resuming the simulation
+	}
 }
