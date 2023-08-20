@@ -4,6 +4,7 @@ package clubSimulation;
 import java.util.Random;
 import java.util.concurrent.*;
 import java.util.concurrent.atomic.AtomicBoolean;
+import java.util.concurrent.CyclicBarrier;
 
 /*
  This is the basic ClubGoer Thread class, representing the patrons at the club
@@ -66,6 +67,22 @@ public class Clubgoer extends Thread {
 	private void startSim() {
 		// THIS DOES NOTHING - MUST BE FIXED
 	}
+
+	private CyclicBarrier barrier;
+
+	private void moveBlockByBlock() throws InterruptedException {
+        // Move to the next block
+        synchronized (currentBlock) {
+            // Wait at the barrier
+            barrier.await();
+            
+            // Move to the next block synchronously
+            int x_mv = /* calculate x movement */;
+            int y_mv = /* calculate y movement */;
+            currentBlock = club.move(currentBlock, x_mv, y_mv, myLocation);
+            sleep(movingSpeed);
+        }
+    }
 
 	// get drink at bar
 	private void getDrink() throws InterruptedException {
