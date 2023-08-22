@@ -87,8 +87,10 @@ public class ClubView extends JPanel implements Runnable {
 				g.fillOval(x + wIncr / 4, y + hIncr / 4, wIncr / 2, hIncr / 2);
 				g.drawString(patronLocations[i].getID() + "", x + wIncr / 4, y + wIncr / 4);
 			} else {
-				if (patronLocations[i].getArrived())
-					System.out.println("customer " + i + " waiting outside"); // debug
+				// if (patronLocations[i].getArrived()) {
+				// System.out.println("customer " + i + " waiting outside"); // debug}
+
+				// }
 			}
 		}
 	}

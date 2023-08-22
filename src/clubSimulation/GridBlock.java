@@ -38,13 +38,15 @@ public class GridBlock {
 
 	public boolean get(int threadID) throws InterruptedException {
 		synchronized (isExit ? exitLock : entranceLock) {
+
+			if (isOccupied == threadID)
+				return true; // thread Already in this block
+			if (isOccupied >= 0)
+				return false; // space is occupied
+			isOccupied = threadID; // set ID to thread that had block
+			return true;
+
 		}
-		if (isOccupied == threadID)
-			return true; // thread Already in this block
-		if (isOccupied >= 0)
-			return false; // space is occupied
-		isOccupied = threadID; // set ID to thread that had block
-		return true;
 	}
 
 	public void release() {

@@ -122,10 +122,14 @@ public class ClubGrid {
 	}
 
 	public void leaveClub(GridBlock currentBlock, PeopleLocation myLocation) {
-		currentBlock.release();
-		counter.personLeft(); // add to counter
-		myLocation.setInRoom(false);
-		entrance.notifyAll();
+		synchronized (entrance) {
+			currentBlock.release();
+			counter.personLeft(); // add to counter
+			myLocation.setInRoom(false);
+
+			entrance.notifyAll();
+		}
+
 	}
 
 	public GridBlock getExit() {

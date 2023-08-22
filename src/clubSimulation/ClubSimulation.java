@@ -13,7 +13,7 @@ import java.util.concurrent.*;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 public class ClubSimulation {
-	static int noClubgoers = 20;
+	static int noClubgoers = 10;
 	static int frameX = 400;
 	static int frameY = 500;
 	static int yLimit = 400;
@@ -149,6 +149,7 @@ public class ClubSimulation {
 
 	public static void startSim() {
 		simRun.set(true);
+
 		Thread t = new Thread(clubView);
 		t.start();
 		// Start counter thread - for updating counters
@@ -170,7 +171,10 @@ public class ClubSimulation {
 	}
 
 	private static void togglePause() {
-		paused.set(!paused.get());
-		// Implement any necessary actions to handle pausing/resuming the simulation
+		synchronized (paused) {
+			paused.set(!paused.get());
+			// handle pausing/resuming the simulation
+		}
 	}
+
 }
