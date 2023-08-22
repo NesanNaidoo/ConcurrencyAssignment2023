@@ -25,10 +25,9 @@ public class CounterDisplay implements Runnable {
 			// test changes colour when at limit and over limit of people inside
 			if (score.getMax() < score.getInside()) {
 				inside.setForeground(Color.RED);
-				ClubSimulation.stopSim();
+
 			} else if (score.getMax() == score.getInside()) {
 				inside.setForeground(Color.ORANGE);
-				ClubSimulation.stopSim();
 
 			} else
 				inside.setForeground(Color.BLACK);

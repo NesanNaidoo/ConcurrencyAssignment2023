@@ -19,7 +19,7 @@ public class ClubSimulation {
 	static int yLimit = 400;
 	static int gridX = 10; // number of x grids in club - default value if not provided on command line
 	static int gridY = 10; // number of y grids in club - default value if not provided on command line
-	static int max = 5; // max number of customers - default value if not provided on command line
+	static int max = 4; // max number of customers - default value if not provided on command line
 
 	static Clubgoer[] patrons; // array for customer threads
 	static PeopleLocation[] peopleLocations; // array to keep track of where customers are
@@ -140,6 +140,11 @@ public class ClubSimulation {
 		for (int i = 0; i < noClubgoers; i++) {
 			peopleLocations[i] = new PeopleLocation(i);
 			int movingSpeed = (int) (Math.random() * (maxWait - minWait) + minWait); // range of speeds for customers
+
+			// if (tallys.overCapacity()) {
+			// peopleLocations[i].setArrived(true); // Set the flag for patrons who are
+			// already waiting outside
+			// }
 			patrons[i] = new Clubgoer(i, peopleLocations[i], movingSpeed);
 		}
 

@@ -150,7 +150,7 @@ public class Clubgoer extends Thread {
 			checkPause();
 			sleep(movingSpeed * (rand.nextInt(100) + 1)); // arriving takes a while
 			checkPause();
-			myLocation.setArrived();
+			myLocation.setArrived(true);
 			System.out.println("Thread " + this.ID + " arrived at club"); // output for checking
 			checkPause(); // check whether have been asked to pause
 			enterClub();
