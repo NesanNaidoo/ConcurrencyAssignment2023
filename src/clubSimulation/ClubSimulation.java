@@ -91,8 +91,13 @@ public class ClubSimulation {
 					togglePause();
 					if (isPaused()) {
 						pauseB.setText("Resume");
+
 					} else {
 						pauseB.setText("Pause");
+						synchronized (paused) {
+							paused.notifyAll();
+						}
+
 					}
 				}
 

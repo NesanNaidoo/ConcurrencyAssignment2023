@@ -19,4 +19,4 @@ clean:
 	rm -rf $(BINDIR)
 
 run:
-		java -Xmx6g -cp $(BINDIR) clubSimulation.ClubSimulation 15 10 10 5
+		java -Xmx6g -cp $(BINDIR) clubSimulation.ClubSimulation 100 20 20 20
