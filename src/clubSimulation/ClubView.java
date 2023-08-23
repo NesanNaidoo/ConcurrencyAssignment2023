@@ -78,6 +78,11 @@ public class ClubView extends JPanel implements Runnable {
 		g.setFont(new Font("Helvetica", Font.BOLD, hIncr / 2));
 
 		// barman should go here
+		g.setColor(Color.blue);
+		int x1 = wIncr; // +1 for centering in the block
+		int y1 = (ClubGrid.getBar_y() + 1) * hIncr;
+		g.fillOval(x1 + wIncr / 4, y1 + hIncr / 4, wIncr / 2, hIncr / 2);
+		g.drawString("Andre", x1 + wIncr / 4, y1 + wIncr / 4);
 
 		// patrons
 		for (int i = 0; i < noPatrons; i++) {

@@ -8,7 +8,7 @@ public class ClubGrid {
 	private GridBlock[][] Blocks;
 	private final int x;
 	private final int y;
-	public final int bar_y;
+	public static int bar_y = 0;
 
 	private GridBlock exit;
 	private GridBlock entrance; // hard coded entrance
@@ -159,7 +159,7 @@ public class ClubGrid {
 		this.exit = exit;
 	}
 
-	public int getBar_y() {
+	public static int getBar_y() {
 		return bar_y;
 	}
 

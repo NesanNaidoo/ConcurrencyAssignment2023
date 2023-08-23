@@ -11,6 +11,7 @@ import java.awt.event.ActionListener;
 import java.util.Random;
 import java.util.concurrent.*;
 import java.util.concurrent.atomic.AtomicBoolean;
+import java.util.concurrent.atomic.AtomicInteger;
 
 public class ClubSimulation {
 	static int noClubgoers = 15;
