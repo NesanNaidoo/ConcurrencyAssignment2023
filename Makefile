@@ -18,5 +18,5 @@ $(BINDIR)/%.class: $(SRCDIR)/%.java
 clean:
 	rm -rf $(BINDIR)
 
-runS:
-		java -Xmx6g -cp $(BINDIR) clubSimulation.ClubSimulation 10 10 10 50
+run:
+		java -Xmx6g -cp $(BINDIR) clubSimulation.ClubSimulation 15 10 10 5

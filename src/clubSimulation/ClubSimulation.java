@@ -13,13 +13,13 @@ import java.util.concurrent.*;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 public class ClubSimulation {
-	static int noClubgoers = 10;
+	static int noClubgoers = 15;
 	static int frameX = 400;
 	static int frameY = 500;
 	static int yLimit = 400;
 	static int gridX = 10; // number of x grids in club - default value if not provided on command line
 	static int gridY = 10; // number of y grids in club - default value if not provided on command line
-	static int max = 4; // max number of customers - default value if not provided on command line
+	static int max = 5; // max number of customers - default value if not provided on command line
 
 	static Clubgoer[] patrons; // array for customer threads
 	static PeopleLocation[] peopleLocations; // array to keep track of where customers are
@@ -34,7 +34,7 @@ public class ClubSimulation {
 	private static int minWait = 500; // for the fastest cutomer
 
 	public static AtomicBoolean simRun = new AtomicBoolean(false);
-	private static AtomicBoolean paused = new AtomicBoolean(false);
+	public static AtomicBoolean paused = new AtomicBoolean(false);
 
 	public static void setupGUI(int frameX, int frameY, int[] exits) {
 		// Frame initialize and dimensions
@@ -89,6 +89,11 @@ public class ClubSimulation {
 
 				synchronized (this) {
 					togglePause();
+					if (isPaused()) {
+						pauseB.setText("Resume");
+					} else {
+						pauseB.setText("Pause");
+					}
 				}
 
 			}
@@ -125,7 +130,7 @@ public class ClubSimulation {
 		}
 
 		// hardcoded exit doors
-		int[] exit = { 0, (int) gridY / 2 - 1 }; // once-cell wide door on left
+		int[] exit = { 0, gridY / 2 - 1 }; // once-cell wide door on left
 
 		tallys = new PeopleCounter(max); // counters for people inside and outside club
 		clubGrid = new ClubGrid(gridX, gridY, exit, tallys); // setup club with size and exitsand maximum limit for

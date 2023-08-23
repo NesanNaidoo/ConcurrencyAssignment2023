@@ -57,11 +57,18 @@ public class Clubgoer extends Thread {
 	// setter
 
 	// check to see if user pressed pause button
-	private synchronized void checkPause() throws InterruptedException {
-		while (ClubSimulation.isPaused()) {
-			sleep(100);
+	private void checkPause() throws InterruptedException {
+		Object pause = ClubSimulation.paused;
+		synchronized (pause) {
+			if (ClubSimulation.isPaused()) {
+				while (ClubSimulation.isPaused()) {
+					pause.wait();
 
+				}
+			}
+			pause.notifyAll();
 		}
+
 	}
 
 	private void startSim() {

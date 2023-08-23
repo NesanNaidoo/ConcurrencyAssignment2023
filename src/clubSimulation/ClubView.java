@@ -6,6 +6,7 @@ import java.awt.Font;
 import javax.swing.JPanel;
 
 public class ClubView extends JPanel implements Runnable {
+	private static final long serialVersionUID = 1L;
 	private PeopleLocation[] patronLocations; // array of the locations of the patrons
 	private PeopleLocation barpersonLocation; // where is the barperson?
 	private int noPatrons; // total number in the simulation
