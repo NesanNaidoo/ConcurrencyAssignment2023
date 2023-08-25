@@ -34,8 +34,8 @@ public class ClubSimulation {
 	private static int maxWait = 1200; // for the slowest customer
 	private static int minWait = 500; // for the fastest cutomer
 
-	public static AtomicBoolean simRun = new AtomicBoolean(false);
-	public static AtomicBoolean paused = new AtomicBoolean(false);
+	public static AtomicBoolean simRun = new AtomicBoolean(false); // to check whether simulation is running
+	public static AtomicBoolean paused = new AtomicBoolean(false); // to check whether simualtion is paused
 
 	public static void setupGUI(int frameX, int frameY, int[] exits) {
 		// Frame initialize and dimensions
@@ -77,7 +77,7 @@ public class ClubSimulation {
 		startB.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 
-				startSim();
+				startSim(); // starts simulation
 				startB.setEnabled(false); // Disable the Start button after it's pressed
 				pauseB.setEnabled(true); // Enable the Pause button
 			}
@@ -89,13 +89,14 @@ public class ClubSimulation {
 			public void actionPerformed(ActionEvent e) {
 
 				synchronized (this) {
-					togglePause();
+					togglePause(); // pauses the simulation,if clicked again will resume the simulation
 					if (isPaused()) {
 						pauseB.setText("Resume");
 
 					} else {
 						pauseB.setText("Pause");
-						synchronized (paused) {
+						synchronized (paused) { // when you click resume,all threads should resume and continue with
+												// their movement
 							paused.notifyAll();
 						}
 
@@ -163,6 +164,7 @@ public class ClubSimulation {
 
 	}
 
+	// all necessary threads that need to be started start here
 	public static void startSim() {
 		simRun.set(true);
 
@@ -178,10 +180,13 @@ public class ClubSimulation {
 
 	}
 
+	// sets simulation running to false to indicate the simulation is not running
+	// anymore
 	public static void stopSim() {
 		simRun.set(false);
 	}
 
+	// checks whether the simualtion is paused
 	public static boolean isPaused() {
 		return paused.get();
 	}

@@ -20,7 +20,8 @@ public class CounterDisplay implements Runnable {
 		this.score = score;
 	}
 
-	public void run() { // this thread just updates the display of the counters
+	public void run() { // while simulation is running this thread just updates the display of the
+						// counters
 		while (ClubSimulation.simRun.get()) {
 			// test changes colour when at limit and over limit of people inside
 			if (score.getMax() < score.getInside()) {

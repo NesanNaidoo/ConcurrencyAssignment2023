@@ -58,7 +58,7 @@ public class Clubgoer extends Thread {
 
 	// check to see if user pressed pause button
 	private void checkPause() throws InterruptedException {
-
+		// if it is paused,then all threads should wait until resume button is clicked
 		synchronized (ClubSimulation.paused) {
 			if (ClubSimulation.isPaused()) {
 				while (ClubSimulation.isPaused()) {

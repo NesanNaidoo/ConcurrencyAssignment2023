@@ -37,6 +37,7 @@ public class GridBlock {
 	}
 
 	public boolean get(int threadID) throws InterruptedException {
+		// synchronized access to entrance or exit
 		synchronized (isExit ? exitLock : entranceLock) {
 
 			if (isOccupied == threadID)
@@ -49,6 +50,7 @@ public class GridBlock {
 		}
 	}
 
+	// synchronized access to release method
 	public void release() {
 		synchronized (isExit ? exitLock : entranceLock) {
 			isOccupied = -1;
@@ -61,7 +63,8 @@ public class GridBlock {
 		return true;
 	}
 
-	// Check if the grid block is occupied by another patron
+	// Check if the grid block is occupied by another patron // this is synchronised
+	// as well
 	public boolean isOccupiedByOther(int threadID) {
 		synchronized (occupancyLock) {
 			return isOccupied != -1 && isOccupied != threadID;
