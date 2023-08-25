@@ -38,7 +38,7 @@ public class GridBlock {
 
 	public boolean get(int threadID) throws InterruptedException {
 		// synchronized access to entrance or exit
-		synchronized (isExit ? exitLock : entranceLock) {
+		synchronized (isExit ? ClubGrid.exit : ClubGrid.entrance) {
 
 			if (isOccupied == threadID)
 				return true; // thread Already in this block
@@ -52,7 +52,7 @@ public class GridBlock {
 
 	// synchronized access to release method
 	public void release() {
-		synchronized (isExit ? exitLock : entranceLock) {
+		synchronized (isExit ? ClubGrid.exit : ClubGrid.entrance) {
 			isOccupied = -1;
 		}
 	}

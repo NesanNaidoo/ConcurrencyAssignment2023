@@ -186,7 +186,7 @@ public class ClubSimulation {
 		simRun.set(false);
 	}
 
-	// checks whether the simualtion is paused
+	// checks whether the simulation is paused
 	public static boolean isPaused() {
 		return paused.get();
 	}
