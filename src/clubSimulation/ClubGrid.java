@@ -10,14 +10,12 @@ public class ClubGrid {
 	private final int y;
 	public static int bar_y = 0;
 
-	private GridBlock exit;
-	private GridBlock entrance; // hard coded entrance
+	public static GridBlock exit;
+	public static GridBlock entrance; // hard coded entrance
 	private final static int minX = 5;// minimum x dimension
 	private final static int minY = 5;// minimum y dimension
 
 	private PeopleCounter counter;
-
-	private final Object entranceLock = new Object(); // Lock for entrance access
 
 	ClubGrid(int x, int y, int[] exitBlocks, PeopleCounter c) throws InterruptedException {
 		if (x < minX)
@@ -81,11 +79,11 @@ public class ClubGrid {
 
 	public GridBlock enterClub(PeopleLocation myLocation) throws InterruptedException {
 		counter.personArrived(); // add to counter of people waiting
-		synchronized (entranceLock) { // Synchronize entrance access
+		synchronized (entrance) { // Synchronize entrance access
 
 			while (counter.overCapacity() || entrance.occupied()) {
 				// counter.personArrived(); // add to counter of people waiting
-				entranceLock.wait(); // Wait until conditions are met
+				entrance.wait(); // Wait until conditions are met
 				// counter.waitingOutDec(); // subtract to counter of people waiting
 
 			}
@@ -96,7 +94,7 @@ public class ClubGrid {
 			myLocation.setInRoom(true);
 			// myLocation.setArrived(false);
 
-			entranceLock.notifyAll(); // Notify waiting patrons about changes in entrance status
+			entrance.notifyAll(); // Notify waiting patrons about changes in entrance status
 			return entrance;
 		}
 	}
@@ -133,12 +131,12 @@ public class ClubGrid {
 	}
 
 	public void leaveClub(GridBlock currentBlock, PeopleLocation myLocation) {
-		synchronized (entrance) { // Synchronize exit block occupancy
+		synchronized (exit) { // Synchronize exit block occupancy
 			currentBlock.release();
 			counter.personLeft(); // add to counter
 			myLocation.setInRoom(false);
 
-			entrance.notifyAll();
+			exit.notifyAll();
 		}
 
 	}
