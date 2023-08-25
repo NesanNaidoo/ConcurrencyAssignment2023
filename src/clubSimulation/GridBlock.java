@@ -12,8 +12,6 @@ public class GridBlock {
 	private final boolean isDance; // is it the dance area?
 	private int[] coords; // the coordinate of the block.
 
-	private final Object entranceLock = new Object(); // Lock for entrance door
-	private final Object exitLock = new Object(); // Lock for exit door
 	private final Object occupancyLock = new Object(); // Lock for occupancy check
 
 	GridBlock(boolean exitBlock, boolean barBlock, boolean danceBlock) throws InterruptedException {
